@@ -1,11 +1,8 @@
-const Bounds = ({ length = 1 }) => {
 
-
-}
 
 
 import { useMemo } from "react";
-import BlockStart, { BlockAxe, BlockEnd, BlockLimbo, BlockSpinner } from "./Block/BlockStart";
+import BlockStart, { BlockAxe, BlockEnd, BlockLimbo, BlockSpinner, Bounds } from "./Block/BlockStart";
 
 const Level = ({ count = 5, types = [BlockSpinner, BlockAxe, BlockLimbo] }) => {
     const blocks = useMemo(() => {
