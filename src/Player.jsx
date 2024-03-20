@@ -6,8 +6,12 @@ import { useRef } from "react";
 const Player = () => {
     const bodyRef = useRef(null)
     const [subscribeKeys, getKeys] = useKeyboardControls()
-    useFrame((state) => {
+    useFrame((state, delta) => {
         const { forward, backward, leftward, rightward } = getKeys()
+
+        const impulseStrength = 1 * delta
+        const torqueStrength = 1 * delta
+
         const impulse = {
             x: 0, y: 0, z: 0
         }
@@ -15,6 +19,9 @@ const Player = () => {
             x: 0,
             y: 0,
             z: 0
+        }
+        if (forward) {
+            impulse.z -= impulseStrength
         }
 
         bodyRef.current.applyImpulse(impulse)
