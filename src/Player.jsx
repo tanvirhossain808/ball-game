@@ -7,7 +7,7 @@ import * as THREE from 'three';
 const Player = () => {
     const bodyRef = useRef(null)
     const [subscribeKeys, getKeys] = useKeyboardControls()
-    const [smoothedCameraPosition] = useState(() => new THREE.Vector3())
+    const [smoothedCameraPosition] = useState(() => new THREE.Vector3(10, 10, 10))
     const [smoothCameraTarget] = useState(() => new THREE.Vector3())
 
 
@@ -101,14 +101,14 @@ const Player = () => {
         const cameraTarget = new THREE.Vector3()
         cameraTarget.copy(bodyPosition)
         cameraTarget.y += 0.25
-        smoothedCameraPosition.lerp(cameraPosition, 0.1)
+        smoothedCameraPosition.lerp(cameraPosition, 5 * delta)
         smoothCameraTarget.lerp(
-            cameraTarget, 0.1
+            cameraTarget, 5 * delta
         )
 
-        state.camera.position.copy(cameraPosition)
+        state.camera.position.copy(smoothedCameraPosition)
 
-        state.camera.lookAt(cameraTarget)
+        state.camera.lookAt(smoothCameraTarget)
 
 
     })
