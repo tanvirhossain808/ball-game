@@ -1,15 +1,18 @@
 
 
 ;
-import BlockStart, { BlockLimbo, BlockSpinner } from "./Block/BlockStart";
+import BlockStart, { BlockAxe, BlockEnd, BlockLimbo, BlockSpinner } from "./Block/BlockStart";
 
 const Level = () => {
     return (
         <>
 
-            <BlockStart position={[0, 0, 8]} />
-            <BlockSpinner position={[0, 0, 4]} />
-            <BlockLimbo position={[0, 0, 0]} />
+            <BlockStart position={[0, 0, 16]} />
+            <BlockSpinner position={[0, 0, 12]} />
+            <BlockLimbo position={[0, 0, 8]} />
+            <BlockAxe position={[0, 0, 4]} />
+            <BlockEnd position={[0, 0, 0]} />
+            {/* <BlockStart position={[0, 0, 0]} /> */}
         </>
     );
 };
