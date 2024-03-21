@@ -19,6 +19,8 @@ const Player = () => {
 
     const { start, end, blocksCount, restart } = useGame()
     const jump = () => {
+
+
         const origin = bodyRef.current.translation()
         origin.y -= 0.31
 
@@ -39,13 +41,24 @@ const Player = () => {
 
     }
 
+    // const reset = () =>
 
     useEffect(() => {
+
+        const unsubscribeReset = useGame.subscribe(
+            (state) => state.phase,
+            (value) => {
+                console.log("phase change to", value);
+            }
+        )
 
         const unsubscribeJump = subscribeKeys(
             (state) => state.jump,
             (value) => {
-                if (value) jump()
+                if (value === "ready") {
+                    restart()
+                }
+
 
             },
 
@@ -60,6 +73,7 @@ const Player = () => {
 
         return () => {
             unsubscribeJump()
+            unsubscribeAny()
             unsubscribeAny()
         }
     }, [])
@@ -124,7 +138,7 @@ const Player = () => {
             end()
         }
 
-        if (bodyPosition.y < -4) console.restart()
+        if (bodyPosition.y < -4) restart()
 
     })
     return (
