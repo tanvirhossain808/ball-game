@@ -3,6 +3,7 @@ import { useFrame } from "@react-three/fiber";
 import { RigidBody, useRapier } from "@react-three/rapier";
 import { useEffect, useRef, useState } from "react";
 import * as THREE from 'three';
+import useGame from "./Stores/useGame";
 
 const Player = () => {
     const bodyRef = useRef(null)
@@ -16,7 +17,7 @@ const Player = () => {
     const { rapier, world } = useRapier()
     const rapierWorld = world.raw()
 
-
+    const { start, end, blocksCount, restart } = useGame()
     const jump = () => {
         const origin = bodyRef.current.translation()
         origin.y -= 0.31
@@ -50,8 +51,16 @@ const Player = () => {
 
 
         )
+
+        const unsubscribeAny = subscribeKeys(
+            () => {
+                start()
+            }
+        )
+
         return () => {
             unsubscribeJump()
+            unsubscribeAny()
         }
     }, [])
 
@@ -110,6 +119,12 @@ const Player = () => {
 
         state.camera.lookAt(smoothCameraTarget)
 
+
+        if (bodyPosition.z < -(blocksCount * 4 + 2)) {
+            end()
+        }
+
+        if (bodyPosition.y < -4) console.restart()
 
     })
     return (

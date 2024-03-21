@@ -16,7 +16,7 @@ export default function Experience() {
             <Lights />
             <Debug />
 
-            <Level />
+            <Level count={blocksCount} />
             <Player />
         </Physics>
 
