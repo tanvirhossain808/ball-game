@@ -41,24 +41,37 @@ const Player = () => {
 
     }
 
-    // const reset = () =>
+    const reset = () => {
+        bodyRef.current.setTranslation({
+            x: 0, y: 10, z: 0
+        })
+        bodyRef.current.setLinvel({
+            x: 0, y: 0, z: 0
+        })
+        bodyRef.current.setAngvel({
+            x: 0, y: 0, z: 0
+        })
 
+    }
+    // const hey = () => {
+
+    // }
     useEffect(() => {
 
         const unsubscribeReset = useGame.subscribe(
             (state) => state.phase,
             (value) => {
-                console.log("phase change to", value);
+                if (value === "ready") {
+                    reset()
+                }
+
             }
         )
 
         const unsubscribeJump = subscribeKeys(
             (state) => state.jump,
             (value) => {
-                if (value === "ready") {
-                    restart()
-                }
-
+                if (value) jump()
 
             },
 
@@ -74,7 +87,7 @@ const Player = () => {
         return () => {
             unsubscribeJump()
             unsubscribeAny()
-            unsubscribeAny()
+            unsubscribeReset()
         }
     }, [])
 
